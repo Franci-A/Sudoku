@@ -1,16 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [CreateAssetMenu(menuName ="Variable/Int")]
-
+[Serializable]
 public class IntScriptable : ScriptableObject
 {
-    private int value;
+    public int value;
 
-    public int GetValue => value;
+    public UnityEvent OnValueChanged;
+
     public void SetValue(int value)
     {
         this.value = value;
+        OnValueChanged?.Invoke();
     }
 }

@@ -13,6 +13,6 @@ public class SelectedNumberCursor : MonoBehaviour
 
     public void SelectNumber(int i)
     {
-        transform.position = buttons[i].position + new Vector3(0, -30, 0);
+        transform.position = buttons[i].position + new Vector3(0, -10,0);
     }
 }

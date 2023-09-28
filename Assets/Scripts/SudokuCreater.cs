@@ -12,11 +12,13 @@ public class SudokuCreater : MonoBehaviour
     [SerializeField] private TileHandler tilePrefab;
     private List<List<Tile>> tiles;
     [SerializeField] private IntScriptable selectedNumber;
+    [SerializeField] private IntScriptable difficultyNumber;
     [SerializeField] private GameObject victoryScreen;
 
     private void Awake()
     {
         Instance = this;
+        selectedNumber.OnValueChanged.AddListener(HighlightSelected);
     }
 
     private void Start()
@@ -33,7 +35,8 @@ public class SudokuCreater : MonoBehaviour
                 TileHandler obj = Instantiate(tilePrefab, parentTransform);
                 obj.Init(x, y);
                 tile.text = obj.GetComponentInChildren<TextMeshProUGUI>();
-
+                tile.notes = obj.notes;
+                tile.background = obj.background;
                 row.Add(tile);
             }
 
@@ -46,11 +49,21 @@ public class SudokuCreater : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            while (!SolvePuzzleRandomOrder())
+            {
+                ResetGrid();
+            }
+        }
+    }
 
     public bool SolvePuzzleRandomOrder()
     {
         List<int> index = new List<int>();
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < difficultyNumber.value; i++)
         {
             int rand;
             do
@@ -59,7 +72,6 @@ public class SudokuCreater : MonoBehaviour
             }
             while (index.Contains(rand));
             index.Add(rand);
-            Debug.Log(rand);
         }
 
         for (int j = 0; j < tiles.Count * tiles[0].Count; j++)
@@ -101,7 +113,6 @@ public class SudokuCreater : MonoBehaviour
             for (int i = 0; i < 9; i++)
             {
                 tiles[indexY][i].RemovePossibleNum(currentNum);
-
             }
 
             for (int i = 0; i < 9; i++)
@@ -126,10 +137,23 @@ public class SudokuCreater : MonoBehaviour
 
     public void SetGrid(int gridX, int gridY)
     {
-        tiles[gridY][gridX].SetNumber(selectedNumber.GetValue);
-        if (CheckPuzzle())
+        if (selectedNumber.value > 9)
         {
-           victoryScreen.SetActive(true);
+            tiles[gridY][gridX].SetNotesNumber(selectedNumber.value - 10);
+
+        }
+        else
+        {
+            tiles[gridY][gridX].SetNumber(selectedNumber.value);
+            bool valid = tiles[gridY][gridX].CheckValidNumber();
+            Debug.Log(valid);
+            if (valid)
+            {
+                if (CheckPuzzle())
+                {
+                    victoryScreen.SetActive(true);
+                }
+            }
         }
     }
 
@@ -154,6 +178,32 @@ public class SudokuCreater : MonoBehaviour
             for (int x = 0; x < 9; x++)
             {
                 tiles[y][x].ResetTile();
+            }
+        }
+    }
+
+    public void HighlightSelected()
+    {
+        if (selectedNumber.value == -1)
+            return;
+
+        int number = selectedNumber.value;
+        if (selectedNumber.value > 9)
+            number -= 9;
+
+        for (int y = 0; y < 9; y++)
+        {
+            for (int x = 0; x < 9; x++)
+            {
+                if ((tiles[y][x].fixedNumber && tiles[y][x].solutionNumber == number) ||
+                    (!tiles[y][x].fixedNumber && tiles[y][x].placedNumber == number))
+                {
+                    tiles[y][x].background.color = Color.yellow;
+                }
+                else
+                {
+                    tiles[y][x].background.color = Color.white;
+                }
             }
         }
     }

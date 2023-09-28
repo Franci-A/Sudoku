@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tile
 {
     public int solutionNumber = -1;
-    bool fixedNumber = false;
+    public bool fixedNumber = false;
     List<int> possibleNum;
 
     public int placedNumber = -1;
     public TextMeshProUGUI text;
+    public List<GameObject> notes;
+    public Image background;
 
     public Tile()
     {
@@ -21,7 +24,7 @@ public class Tile
 
     public bool RemovePossibleNum(int num)
     {
-        if (solutionNumber != -1 && num == solutionNumber)
+        if (placedNumber != -1)
             return false;
 
         if (possibleNum.Count <= 0)
@@ -46,7 +49,7 @@ public class Tile
 
     public void SetStartNumber()
     {
-        text.color = Color.blue;
+        text.color = Color.gray;
         SetNumber(solutionNumber);
         fixedNumber = true;
     }
@@ -64,6 +67,10 @@ public class Tile
             placedNumber = num;
             text.text = num.ToString(); 
         }
+        for (int i = 0; i < notes.Count; i++)
+        {
+            notes[i].SetActive(false);
+        }
     }
 
     public void SetRandomNumber()
@@ -78,12 +85,25 @@ public class Tile
             return;
         SetSolutionNumber(possibleNum[0]);
     }
+    
+    public void SetNotesNumber(int number)
+    {
+        if (placedNumber != -1 || fixedNumber)
+            return;
+        notes[number].SetActive(!notes[number].activeSelf);
+    }
 
     public void ResetTile()
     {
         solutionNumber = -1;
+        placedNumber = -1;
+        fixedNumber = false;
         possibleNum.Clear();
         possibleNum = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        for (int i = 0; i < notes.Count; i++)
+        {
+            notes[i].SetActive(false);
+        }
     }
 
     public bool CheckValidNumber()

@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TileHandler : MonoBehaviour
 {
     int x, y;
+    public List<GameObject> notes;
+    public Image background;
 
     public void Init(int gridX, int gridY)
     {
@@ -15,7 +18,6 @@ public class TileHandler : MonoBehaviour
 
     public void SetNumber()
     {
-        Debug.Log(x + " " + y);
         SudokuCreater.Instance.SetGrid(x, y);
     }
 }
