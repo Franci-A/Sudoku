@@ -14,6 +14,7 @@ public class SudokuCreater : MonoBehaviour
     [SerializeField] private IntScriptable selectedNumber;
     [SerializeField] private IntScriptable difficultyNumber;
     [SerializeField] private GameObject victoryScreen;
+    [SerializeField] private ColorThemeScriptable colorTheme;
 
     private void Awake()
     {
@@ -31,10 +32,9 @@ public class SudokuCreater : MonoBehaviour
             
             for (int x = 0; x < 9; x++)
             {
-                Tile tile = new Tile();
                 TileHandler obj = Instantiate(tilePrefab, parentTransform);
+                Tile tile = new Tile(colorTheme, obj.GetComponentInChildren<TextMeshProUGUI>());
                 obj.Init(x, y);
-                tile.text = obj.GetComponentInChildren<TextMeshProUGUI>();
                 tile.notes = obj.notes;
                 tile.background = obj.background;
                 row.Add(tile);
@@ -198,7 +198,7 @@ public class SudokuCreater : MonoBehaviour
                 if ((tiles[y][x].fixedNumber && tiles[y][x].solutionNumber == number) ||
                     (!tiles[y][x].fixedNumber && tiles[y][x].placedNumber == number))
                 {
-                    tiles[y][x].background.color = Color.yellow;
+                    tiles[y][x].background.color = colorTheme.selectedBackground;
                 }
                 else
                 {

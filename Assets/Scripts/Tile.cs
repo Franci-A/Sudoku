@@ -14,10 +14,14 @@ public class Tile
     public TextMeshProUGUI text;
     public List<GameObject> notes;
     public Image background;
+    [SerializeField] private ColorThemeScriptable colorTheme;
 
-    public Tile()
+    public Tile(ColorThemeScriptable theme, TextMeshProUGUI textInstance)
     {
         possibleNum = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        colorTheme = theme;
+        text = textInstance;
+        text.color = colorTheme.placedColor;
     }
 
     public List<int> GetPossibleNumber => possibleNum;
@@ -49,7 +53,7 @@ public class Tile
 
     public void SetStartNumber()
     {
-        text.color = Color.gray;
+        text.color = colorTheme.fixedColor;
         SetNumber(solutionNumber);
         fixedNumber = true;
     }
