@@ -9,7 +9,7 @@ public class SelectedButtonController : MonoBehaviour
     [SerializeField] private IntScriptable selectedNumber;
     private Color baseColor;
     private int preivousNumber = -1;
-    [SerializeField] private ColorThemeScriptable colorTheme;
+    [SerializeField] private SO_ColorThemeScriptable colorTheme;
 
     private void Start()
     {

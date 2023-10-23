@@ -14,9 +14,9 @@ public class Tile
     public TextMeshProUGUI text;
     public List<GameObject> notes;
     public Image background;
-    [SerializeField] private ColorThemeScriptable colorTheme;
+    [SerializeField] private SO_ColorThemeScriptable colorTheme;
 
-    public Tile(ColorThemeScriptable theme, TextMeshProUGUI textInstance)
+    public Tile(SO_ColorThemeScriptable theme, TextMeshProUGUI textInstance)
     {
         possibleNum = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         colorTheme = theme;

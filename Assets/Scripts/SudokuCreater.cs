@@ -14,7 +14,9 @@ public class SudokuCreater : MonoBehaviour
     [SerializeField] private IntScriptable selectedNumber;
     [SerializeField] private IntScriptable difficultyNumber;
     [SerializeField] private GameObject victoryScreen;
-    [SerializeField] private ColorThemeScriptable colorTheme;
+    [SerializeField] private SO_ThemeHolder allTheme;
+    [SerializeField] private IntScriptable selectedTheme;
+    private SO_ColorThemeScriptable colorTheme;
 
     private void Awake()
     {
@@ -24,6 +26,7 @@ public class SudokuCreater : MonoBehaviour
 
     private void Start()
     {
+        colorTheme = allTheme.themes[selectedTheme.value].theme;
         tiles = new List<List<Tile>>();
         tiles = new List<List<Tile>>();
         for (int y = 0; y < 9; y++)

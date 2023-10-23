@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6a4cc491d1a20348b71246af92bea66, type: 3}
+  m_Name: Theme Holder
+  m_EditorClassIdentifier: 
+  themes:
+  - name: BaseTheme
+    isUnlocked: 1
+    theme: {fileID: 11400000, guid: 1069520e228382543a72eee7df5557ce, type: 2}
+  - name: GreenTheme
+    isUnlocked: 1
+    theme: {fileID: 11400000, guid: 4b538e915fc1df64a980e326210ad1f3, type: 2}
+  - name: RedTheme
+    isUnlocked: 1
+    theme: {fileID: 11400000, guid: b784fdb83922eab4ebdaf61c6f6f83ad, type: 2}

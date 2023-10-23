@@ -5,7 +5,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName ="ColorTheme")]
 [Serializable]
-public class ColorThemeScriptable : ScriptableObject
+public class SO_ColorThemeScriptable : ScriptableObject
 {
     public Color selectedButton = Color.white;
     public Color selectedBackground= Color.white;
