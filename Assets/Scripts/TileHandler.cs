@@ -18,6 +18,6 @@ public class TileHandler : MonoBehaviour
 
     public void SetNumber()
     {
-        SudokuCreater.Instance.SetGrid(x, y);
+        SudokuHandler.Instance.SetGrid(x, y);
     }
 }

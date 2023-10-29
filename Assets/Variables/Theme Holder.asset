@@ -15,10 +15,14 @@ MonoBehaviour:
   themes:
   - name: BaseTheme
     isUnlocked: 1
+    themeId: 0
     theme: {fileID: 11400000, guid: 1069520e228382543a72eee7df5557ce, type: 2}
   - name: GreenTheme
     isUnlocked: 1
+    themeId: 1
     theme: {fileID: 11400000, guid: 4b538e915fc1df64a980e326210ad1f3, type: 2}
   - name: RedTheme
     isUnlocked: 1
+    themeId: 2
     theme: {fileID: 11400000, guid: b784fdb83922eab4ebdaf61c6f6f83ad, type: 2}
+  selectedTheme: {fileID: 11400000, guid: 0a13c3ab8f474d8419b2e89b430e921c, type: 2}

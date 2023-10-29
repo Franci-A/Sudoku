@@ -9,6 +9,7 @@ public class SelectedButtonController : MonoBehaviour
     [SerializeField] private IntScriptable selectedNumber;
     private Color baseColor;
     private int preivousNumber = -1;
+    [SerializeField] private SO_ThemeHolder themeHolder;
     [SerializeField] private SO_ColorThemeScriptable colorTheme;
 
     private void Start()
@@ -16,7 +17,9 @@ public class SelectedButtonController : MonoBehaviour
         buttons = GetComponentsInChildren<Button>();
         selectedNumber.value = 0;
         SelectedButton();
+        colorTheme = themeHolder.GetSelectdedTheme();
     }
+
     public void SelectedButton()
     {
         if (preivousNumber == selectedNumber.value -1)

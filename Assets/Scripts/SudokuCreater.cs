@@ -1,81 +1,28 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+using System.Diagnostics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SudokuCreater : MonoBehaviour
 {
-    public static SudokuCreater Instance { get; private set; }
-
-    [SerializeField] private Transform parentTransform;
-    [SerializeField] private TileHandler tilePrefab;
-    private List<List<Tile>> tiles;
-    [SerializeField] private IntScriptable selectedNumber;
-    [SerializeField] private IntScriptable difficultyNumber;
-    [SerializeField] private GameObject victoryScreen;
-    [SerializeField] private SO_ThemeHolder allTheme;
-    [SerializeField] private IntScriptable selectedTheme;
-    private SO_ColorThemeScriptable colorTheme;
-
-    private void Awake()
+    public void Init(int startingNumbers, List<List<Tile>> tiles)
     {
-        Instance = this;
-        selectedNumber.OnValueChanged.AddListener(HighlightSelected);
-    }
-
-    private void Start()
-    {
-        colorTheme = allTheme.themes[selectedTheme.value].theme;
-        tiles = new List<List<Tile>>();
-        tiles = new List<List<Tile>>();
-        for (int y = 0; y < 9; y++)
+        //StartCoroutine(SolvePuzzleRandomOrder(startingNumbers, tiles));
+        while (!SolvePuzzleRandomOrder(startingNumbers, tiles)) 
         {
-            List<Tile> row = new List<Tile>();
-            
-            for (int x = 0; x < 9; x++)
-            {
-                TileHandler obj = Instantiate(tilePrefab, parentTransform);
-                Tile tile = new Tile(colorTheme, obj.GetComponentInChildren<TextMeshProUGUI>());
-                obj.Init(x, y);
-                tile.notes = obj.notes;
-                tile.background = obj.background;
-                row.Add(tile);
-            }
-
-            tiles.Add(row);
-        }
-
-        while (!SolvePuzzleRandomOrder()) 
-        {
-            ResetGrid();
+            ResetGrid(tiles);
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            while (!SolvePuzzleRandomOrder())
-            {
-                ResetGrid();
-            }
-        }
-    }
-
-    public bool SolvePuzzleRandomOrder()
+    public bool SolvePuzzleRandomOrder(int difficultyNumber, List<List<Tile>> tiles)
     {
         List<int> index = new List<int>();
-        for (int i = 0; i < difficultyNumber.value; i++)
+        for (int i = 0; i < tiles.Count * tiles[0].Count; i++)
         {
-            int rand;
-            do
-            {
-                rand = UnityEngine.Random.Range(0, 81);
-            }
-            while (index.Contains(rand));
-            index.Add(rand);
+            index.Add(i);
         }
+
 
         for (int j = 0; j < tiles.Count * tiles[0].Count; j++)
         {
@@ -95,31 +42,25 @@ public class SudokuCreater : MonoBehaviour
                         indexY = iy;
                         numPossible = tiles[iy][ix].GetPossibleNumber.Count;
                     }
-
                 }
             }
-            
 
-            if(indexX == -1|| numPossible == 0)
+
+
+            if (indexX == -1 || numPossible == 0)
             {
-                Debug.Log("Not possible");
-                return false ;
+                //Debug.Log("Not possible");
+                return false;
             }
 
             tiles[indexY][indexX].SetRandomNumber();
 
             int currentNum = tiles[indexY][indexX].solutionNumber;
 
-            if (index.Contains(j))
-                tiles[indexY][indexX].SetStartNumber();
-
             for (int i = 0; i < 9; i++)
             {
                 tiles[indexY][i].RemovePossibleNum(currentNum);
-            }
 
-            for (int i = 0; i < 9; i++)
-            {
                 tiles[i][indexX].RemovePossibleNum(currentNum);
             }
 
@@ -129,52 +70,17 @@ public class SudokuCreater : MonoBehaviour
             {
                 for (int x = 0; x < 3; x++)
                 {
-                    tiles[gridY *3 +y][gridX *3 +x].RemovePossibleNum(currentNum);
+                    tiles[gridY * 3 + y][gridX * 3 + x].RemovePossibleNum(currentNum);
 
                 }
-            }
-
-        }
-        return true;
-    }
-
-    public void SetGrid(int gridX, int gridY)
-    {
-        if (selectedNumber.value > 9)
-        {
-            tiles[gridY][gridX].SetNotesNumber(selectedNumber.value - 10);
-
-        }
-        else
-        {
-            tiles[gridY][gridX].SetNumber(selectedNumber.value);
-            bool valid = tiles[gridY][gridX].CheckValidNumber();
-            Debug.Log(valid);
-            if (valid)
-            {
-                if (CheckPuzzle())
-                {
-                    victoryScreen.SetActive(true);
-                }
-            }
-        }
-    }
-
-    public bool CheckPuzzle()
-    {
-        for (int y = 0; y < 9; y++)
-        {
-            for (int x = 0; x < 9; x++)
-            {
-                if (!tiles[y][x].CheckValidNumber())
-                    return false;
             }
         }
         return true;
     }
+    
 
 
-    public void ResetGrid()
+    public void ResetGrid(List<List<Tile>> tiles)
     {
         for (int y = 0; y < 9; y++)
         {
@@ -185,29 +91,5 @@ public class SudokuCreater : MonoBehaviour
         }
     }
 
-    public void HighlightSelected()
-    {
-        if (selectedNumber.value == -1)
-            return;
 
-        int number = selectedNumber.value;
-        if (selectedNumber.value > 9)
-            number -= 9;
-
-        for (int y = 0; y < 9; y++)
-        {
-            for (int x = 0; x < 9; x++)
-            {
-                if ((tiles[y][x].fixedNumber && tiles[y][x].solutionNumber == number) ||
-                    (!tiles[y][x].fixedNumber && tiles[y][x].placedNumber == number))
-                {
-                    tiles[y][x].background.color = colorTheme.selectedBackground;
-                }
-                else
-                {
-                    tiles[y][x].background.color = Color.white;
-                }
-            }
-        }
-    }
 }
