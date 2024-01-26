@@ -101,8 +101,10 @@ public class SudokuHandler : MonoBehaviour
                 if (CheckPuzzle())
                 {
                     victoryScreen.SetActive(true);
+                    return;
                 }
             }
+            tiles[gridY][gridX].background.color = colorTheme.selectedBackground;
         }
     }
 
