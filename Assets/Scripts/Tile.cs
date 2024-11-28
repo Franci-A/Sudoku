@@ -58,10 +58,11 @@ public class Tile
         fixedNumber = true;
     }
 
-    public void SetNumber(int num)
+    public bool SetNumber(int num)
     {
         if (fixedNumber)
-            return;
+            return false;
+        bool value = false;
         if (num == -1)
         {
             placedNumber = -1;
@@ -70,11 +71,13 @@ public class Tile
         else {
             placedNumber = num;
             text.text = num.ToString(); 
+            value = true;
         }
         for (int i = 0; i < notes.Count; i++)
         {
             notes[i].SetActive(false);
         }
+        return value;
     }
 
     public void SetRandomNumber()

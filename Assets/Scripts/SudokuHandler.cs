@@ -30,7 +30,7 @@ public class SudokuHandler : MonoBehaviour
     private void Start()
     {
         colorTheme = allTheme.GetSelectdedTheme();
-
+        selectedNumber.SetValue(1);
         tiles = new List<List<Tile>>();
         for (int y = 0; y < 9; y++)
         {
@@ -87,15 +87,16 @@ public class SudokuHandler : MonoBehaviour
 
     public void SetGrid(int gridX, int gridY)
     {
+        if (selectedNumber.value == 0)
+            return;
         if (selectedNumber.value > 9)
         {
             tiles[gridY][gridX].SetNotesNumber(selectedNumber.value - 10);
         }
         else
         {
-            tiles[gridY][gridX].SetNumber(selectedNumber.value);
+            bool placed = tiles[gridY][gridX].SetNumber(selectedNumber.value);
             bool valid = tiles[gridY][gridX].CheckValidNumber();
-            Debug.Log(valid);
             if (valid)
             {
                 if (CheckPuzzle())
@@ -104,7 +105,12 @@ public class SudokuHandler : MonoBehaviour
                     return;
                 }
             }
-            tiles[gridY][gridX].background.color = colorTheme.selectedBackground;
+            /*if(CheckDoubles(gridY, gridX, selectedNumber.value))
+            {
+
+            }*/
+            if(placed) 
+                tiles[gridY][gridX].background.color = colorTheme.selectedBackground;
         }
     }
 
@@ -145,6 +151,25 @@ public class SudokuHandler : MonoBehaviour
             }
         }
         return true;
+    }
+    
+    public bool CheckDoublesRow(int yValue, int placedValue)
+    {
+        for (int x = 0; x < 9; x++)
+        {
+            if (tiles[yValue][x].placedNumber == placedValue)
+                return true;
+        }
+        return false;
+    }
+    public bool CheckDoublesColunm(int xValue, int placedValue)
+    {
+        for (int y = 0; y < 9; y++)
+        {
+            if (tiles[y][xValue].placedNumber == placedValue)
+                return true;
+        }
+        return false;
     }
 
     public void ResetGrid()
