@@ -117,4 +117,9 @@ public class Tile
     {
         return placedNumber == solutionNumber;
     }
+
+    public void SetNumberColor(Color color)
+    {
+        text.color = color;
+    }
 }

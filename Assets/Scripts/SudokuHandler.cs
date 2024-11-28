@@ -30,7 +30,6 @@ public class SudokuHandler : MonoBehaviour
     private void Start()
     {
         colorTheme = allTheme.GetSelectdedTheme();
-        selectedNumber.SetValue(1);
         tiles = new List<List<Tile>>();
         for (int y = 0; y < 9; y++)
         {
@@ -49,6 +48,7 @@ public class SudokuHandler : MonoBehaviour
 
             tiles.Add(row);
         }
+        selectedNumber.SetValue(1);
 
         sudokuCreater.Init(difficultyNumber.value, tiles);
 
@@ -105,11 +105,20 @@ public class SudokuHandler : MonoBehaviour
                     return;
                 }
             }
-            /*if(CheckDoubles(gridY, gridX, selectedNumber.value))
+            //check for already place the same number in row/colunm/square
+            if(CheckDoublesRow(gridX, gridY, selectedNumber.value))
             {
-
-            }*/
-            if(placed) 
+                tiles[gridY][gridX].SetNumberColor(colorTheme.wrongColor);
+            }
+            if(CheckDoublesColunm(gridX, gridY, selectedNumber.value))
+            {
+                tiles[gridY][gridX].SetNumberColor(colorTheme.wrongColor);
+            }
+            if(CheckDoublesSquare(gridX, gridY, selectedNumber.value))
+            {
+                tiles[gridY][gridX].SetNumberColor(colorTheme.wrongColor);
+            }
+            if (placed) 
                 tiles[gridY][gridX].background.color = colorTheme.selectedBackground;
         }
     }
@@ -153,21 +162,45 @@ public class SudokuHandler : MonoBehaviour
         return true;
     }
     
-    public bool CheckDoublesRow(int yValue, int placedValue)
+    public bool CheckDoublesRow(int xValue, int yValue, int placedValue)
     {
         for (int x = 0; x < 9; x++)
         {
+            if (xValue == x)
+                continue;
+
             if (tiles[yValue][x].placedNumber == placedValue)
                 return true;
         }
         return false;
     }
-    public bool CheckDoublesColunm(int xValue, int placedValue)
+    public bool CheckDoublesColunm(int xValue, int yValue, int placedValue)
     {
         for (int y = 0; y < 9; y++)
         {
+            if (yValue == y)
+                continue;
+
             if (tiles[y][xValue].placedNumber == placedValue)
                 return true;
+        }
+        return false;
+    }
+    
+    public bool CheckDoublesSquare(int xValue,int yValue, int placedValue)
+    {
+        int baseY = yValue - yValue % 3;
+        int baseX = xValue - xValue % 3;
+        for (int y = 0; y < 3; y++)
+        {
+            for (int x = 0; x < 3; x++)
+            {
+                if (baseX + x == xValue && baseY + y == yValue)
+                    continue;
+
+                if (tiles[baseY + y][baseX + x].placedNumber == placedValue)
+                    return true;
+            }
         }
         return false;
     }

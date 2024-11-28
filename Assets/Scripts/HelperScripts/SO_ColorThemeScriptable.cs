@@ -11,4 +11,5 @@ public class SO_ColorThemeScriptable : ScriptableObject
     public Color selectedBackground= Color.white;
     public Color fixedColor= Color.white;
     public Color placedColor = Color.white;
+    public Color wrongColor = Color.red;
 }
