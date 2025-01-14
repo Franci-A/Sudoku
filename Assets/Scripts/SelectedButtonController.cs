@@ -18,10 +18,13 @@ public class SelectedButtonController : MonoBehaviour
         selectedNumber.value = 0;
         SelectedButton();
         colorTheme = themeHolder.GetSelectdedTheme();
+        selectedNumber.OnValueChanged.AddListener(SelectedButton);
     }
 
     public void SelectedButton()
     {
+        if (selectedNumber.value  == -1)
+            return;
         if (preivousNumber == selectedNumber.value -1)
             return;
 

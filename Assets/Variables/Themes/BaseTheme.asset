@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef0a25c4949241e47834c485e94bd9dc, type: 3}
-  m_Name: RedTheme
+  m_Name: BaseTheme
   m_EditorClassIdentifier: 
-  selectedButton: {r: 0.9245283, g: 0.7012708, b: 0.20496617, a: 1}
-  selectedBackground: {r: 0.9245283, g: 0.58388776, b: 0.3270737, a: 1}
+  selectedButton: {r: 0.5613208, g: 0.9079854, b: 1, a: 1}
+  selectedBackground: {r: 0.5801887, g: 1, b: 0.75107145, a: 1}
   fixedColor: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
-  placedColor: {r: 0.9150943, g: 0.23740657, b: 0.23740657, a: 1}
+  placedColor: {r: 0.94919175, g: 0.7028302, b: 1, a: 1}
+  wrongColor: {r: 1, g: 0, b: 0, a: 1}

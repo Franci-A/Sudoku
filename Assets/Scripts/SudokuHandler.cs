@@ -10,6 +10,7 @@ public class SudokuHandler : MonoBehaviour
 
     [SerializeField] private IntScriptable selectedNumber;
     [SerializeField] private IntScriptable difficultyNumber;
+    [SerializeField] private BoolScriptable isNotes;
 
 
     [SerializeField] private Transform parentTransform;
@@ -39,7 +40,7 @@ public class SudokuHandler : MonoBehaviour
             {
                 TileHandler obj = Instantiate(tilePrefab, parentTransform);
                 Tile tile = new Tile(colorTheme, obj.GetComponentInChildren<TextMeshProUGUI>());
-                obj.Init(x, y);
+                obj.Init(x, y, tile , colorTheme);
                 tile.notes = obj.notes;
                 tile.background = obj.background;
                 row.Add(tile);
@@ -89,9 +90,9 @@ public class SudokuHandler : MonoBehaviour
     {
         if (selectedNumber.value == 0)
             return;
-        if (selectedNumber.value > 9)
+        if (isNotes.value)
         {
-            tiles[gridY][gridX].SetNotesNumber(selectedNumber.value - 10);
+            tiles[gridY][gridX].SetNotesNumber(selectedNumber.value);
         }
         else
         {
@@ -129,8 +130,6 @@ public class SudokuHandler : MonoBehaviour
             return;
 
         int number = selectedNumber.value;
-        if (selectedNumber.value > 9)
-            number -= 9;
 
         for (int y = 0; y < 9; y++)
         {

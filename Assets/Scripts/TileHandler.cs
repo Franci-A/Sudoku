@@ -9,15 +9,31 @@ public class TileHandler : MonoBehaviour
     int x, y;
     public List<GameObject> notes;
     public Image background;
+    [SerializeField] private IntScriptable selectedNumber;
+    public Tile tile;
+    private SO_ColorThemeScriptable colorTheme;
 
-    public void Init(int gridX, int gridY)
+    public void Init(int gridX, int gridY, Tile tile, SO_ColorThemeScriptable theme)
     {
         x = gridX;
         y = gridY;
+        this.tile = tile;
+        colorTheme = theme;
+        selectedNumber.OnValueChanged.AddListener(HandleSelectedNumberColor);
     }
 
     public void SetNumber()
     {
         SudokuHandler.Instance.SetGrid(x, y);
+    }
+
+    private void HandleSelectedNumberColor()
+    {
+        if (selectedNumber.value == -1)
+            tile.SetNumberColor(Color.white);
+
+        if(selectedNumber.value == tile.placedNumber)
+            tile.background.color = colorTheme.selectedBackground;
+
     }
 }
