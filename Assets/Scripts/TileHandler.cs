@@ -24,7 +24,11 @@ public class TileHandler : MonoBehaviour
 
     public void SetNumber()
     {
-        SudokuHandler.Instance.SetGrid(x, y);
+        if (tile.fixedNumber)
+            return;
+        SudokuController.Instance.OnSelectTile(x, y);
+        tile.background.color = colorTheme.selectedBackground;
+
     }
 
     private void HandleSelectedNumberColor()

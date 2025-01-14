@@ -85,6 +85,12 @@ public class SudokuHandler : MonoBehaviour
         }
     }
 
+    
+    public void SetGrid(Vector2Int gridPos)
+    {
+        SetGrid(gridPos.x, gridPos.y);
+    }
+
     public void SetGrid(int gridX, int gridY)
     {
         if (selectedNumber.value == 0)
