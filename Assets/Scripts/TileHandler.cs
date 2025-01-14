@@ -30,10 +30,14 @@ public class TileHandler : MonoBehaviour
     private void HandleSelectedNumberColor()
     {
         if (selectedNumber.value == -1)
-            tile.SetNumberColor(Color.white);
+        {
+            tile.background.color = Color.white;
+            return;
+        }
 
         if(selectedNumber.value == tile.placedNumber)
             tile.background.color = colorTheme.selectedBackground;
-
+        else
+            tile.background.color = Color.white;
     }
 }

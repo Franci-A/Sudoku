@@ -24,7 +24,6 @@ public class SudokuHandler : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        selectedNumber.OnValueChanged.AddListener(HighlightSelected);
         sudokuCreater = GetComponent<SudokuCreater>();
     }
 
@@ -124,29 +123,6 @@ public class SudokuHandler : MonoBehaviour
         }
     }
 
-    public void HighlightSelected()
-    {
-        if (selectedNumber.value == -1)
-            return;
-
-        int number = selectedNumber.value;
-
-        for (int y = 0; y < 9; y++)
-        {
-            for (int x = 0; x < 9; x++)
-            {
-                if ((tiles[y][x].fixedNumber && tiles[y][x].solutionNumber == number) ||
-                    (!tiles[y][x].fixedNumber && tiles[y][x].placedNumber == number))
-                {
-                    tiles[y][x].background.color = colorTheme.selectedBackground;
-                }
-                else
-                {
-                    tiles[y][x].background.color = Color.white;
-                }
-            }
-        }
-    }
 
     public bool CheckPuzzle()
     {
