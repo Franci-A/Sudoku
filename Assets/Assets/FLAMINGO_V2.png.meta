@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      FLAMINGO_V2_0: 4483206226518541776
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
