@@ -11,17 +11,17 @@ public class Tile
     List<int> possibleNum;
 
     public int placedNumber = -1;
-    public TextMeshProUGUI text;
+    public TextMeshPro text;
     public List<GameObject> notes;
-    public Image background;
+    public SpriteRenderer background;
     [SerializeField] private SO_ColorThemeScriptable colorTheme;
 
-    public Tile(SO_ColorThemeScriptable theme, TextMeshProUGUI textInstance)
+    public Tile(SO_ColorThemeScriptable theme, TextMeshPro textInstance)
     {
         possibleNum = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         colorTheme = theme;
         text = textInstance;
-        text.color = colorTheme.placedColor;
+        text.color = colorTheme.placedTextColor;
     }
 
     public List<int> GetPossibleNumber => possibleNum;
@@ -53,7 +53,7 @@ public class Tile
 
     public void SetStartNumber()
     {
-        text.color = colorTheme.fixedColor;
+        text.color = colorTheme.fixedTextColor;
         SetNumber(solutionNumber);
         fixedNumber = true;
     }

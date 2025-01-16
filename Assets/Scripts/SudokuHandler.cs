@@ -14,7 +14,7 @@ public class SudokuHandler : MonoBehaviour
 
 
     [SerializeField] private Transform parentTransform;
-    [SerializeField] private TileHandler tilePrefab;
+    [SerializeField] private SquareHandler[] squaresInstances;
     private List<List<Tile>> tiles;
     [SerializeField] private GameObject victoryScreen;
     [SerializeField] private SO_ThemeHolder allTheme;
@@ -37,8 +37,9 @@ public class SudokuHandler : MonoBehaviour
 
             for (int x = 0; x < 9; x++)
             {
-                TileHandler obj = Instantiate(tilePrefab, parentTransform);
-                Tile tile = new Tile(colorTheme, obj.GetComponentInChildren<TextMeshProUGUI>());
+                int index = Mathf.FloorToInt(y / 3) * 3 + Mathf.FloorToInt(x / 3);
+                TileHandler obj = squaresInstances[index].GetTile((y % 3) *3 + x % 3);
+                Tile tile = new Tile(colorTheme, obj.GetComponentInChildren<TextMeshPro>());
                 obj.Init(x, y, tile , colorTheme);
                 tile.notes = obj.notes;
                 tile.background = obj.background;
@@ -114,18 +115,20 @@ public class SudokuHandler : MonoBehaviour
             //check for already place the same number in row/colunm/square
             if(CheckDoublesRow(gridX, gridY, selectedNumber.value))
             {
-                tiles[gridY][gridX].SetNumberColor(colorTheme.wrongColor);
+                tiles[gridY][gridX].SetNumberColor(colorTheme.wrongTextColor);
             }
             if(CheckDoublesColunm(gridX, gridY, selectedNumber.value))
             {
-                tiles[gridY][gridX].SetNumberColor(colorTheme.wrongColor);
+                tiles[gridY][gridX].SetNumberColor(colorTheme.wrongTextColor);
             }
             if(CheckDoublesSquare(gridX, gridY, selectedNumber.value))
             {
-                tiles[gridY][gridX].SetNumberColor(colorTheme.wrongColor);
+                tiles[gridY][gridX].SetNumberColor(colorTheme.wrongTextColor);
             }
-            if (placed) 
-                tiles[gridY][gridX].background.color = colorTheme.selectedBackground;
+            if (placed)
+            {
+                //tiles[gridY][gridX].background.color = colorTheme.selectedBackground;
+            }
         }
     }
 

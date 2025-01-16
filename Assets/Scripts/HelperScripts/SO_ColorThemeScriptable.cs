@@ -8,8 +8,10 @@ using UnityEngine;
 public class SO_ColorThemeScriptable : ScriptableObject
 {
     public Color selectedButton = Color.white;
-    public Color selectedBackground= Color.white;
-    public Color fixedColor= Color.white;
-    public Color placedColor = Color.white;
-    public Color wrongColor = Color.red;
+    public Sprite baseBackground;
+    public Sprite highlightedBackground;
+    public Sprite selectedBackground;
+    public Color fixedTextColor = Color.white; //text
+    public Color placedTextColor = Color.white;
+    public Color wrongTextColor = Color.red;
 }

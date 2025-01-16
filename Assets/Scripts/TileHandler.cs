@@ -8,8 +8,8 @@ public class TileHandler : MonoBehaviour
 {
     int x, y;
     public List<GameObject> notes;
-    public Image background;
     [SerializeField] private IntScriptable selectedNumber;
+    public SpriteRenderer background;
     public Tile tile;
     private SO_ColorThemeScriptable colorTheme;
 
@@ -22,26 +22,38 @@ public class TileHandler : MonoBehaviour
         selectedNumber.OnValueChanged.AddListener(HandleSelectedNumberColor);
     }
 
-    public void SetNumber()
+    private void OnMouseDown()
     {
-        if (tile.fixedNumber)
-            return;
-        SudokuController.Instance.OnSelectTile(x, y);
-        tile.background.color = colorTheme.selectedBackground;
+        SelectTile();
+    }
 
+    public void SelectTile()
+    {
+        background.sprite = colorTheme.selectedBackground;
+        if (tile.fixedNumber)
+        {
+            selectedNumber.SetValue(tile.placedNumber);
+            return;
+        }
+        SudokuController.Instance.OnSelectTile(x, y);
+    }
+
+    public void UnselectTile()
+    {
+        background.sprite = colorTheme.baseBackground;
     }
 
     private void HandleSelectedNumberColor()
     {
         if (selectedNumber.value == -1)
         {
-            tile.background.color = Color.white;
+            background.sprite = colorTheme.baseBackground;
             return;
         }
 
         if(selectedNumber.value == tile.placedNumber)
-            tile.background.color = colorTheme.selectedBackground;
+            background.sprite = colorTheme.selectedBackground;
         else
-            tile.background.color = Color.white;
+            background.sprite = colorTheme.baseBackground;
     }
 }
