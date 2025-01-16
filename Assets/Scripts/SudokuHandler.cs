@@ -11,6 +11,7 @@ public class SudokuHandler : MonoBehaviour
     [SerializeField] private IntScriptable selectedNumber;
     [SerializeField] private IntScriptable difficultyNumber;
     [SerializeField] private BoolScriptable isNotes;
+    [SerializeField] private BoolScriptable isGamePaused;
 
 
     [SerializeField] private Transform parentTransform;
@@ -54,6 +55,8 @@ public class SudokuHandler : MonoBehaviour
         sudokuCreater.Init(difficultyNumber.value, tiles);
 
         SetStartingDifficulty();
+
+        isGamePaused.SetValue(false);
     }
 
     private void Update()

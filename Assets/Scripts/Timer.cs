@@ -8,7 +8,8 @@ public class Timer : MonoBehaviour
     public static Timer Instance;
     private float timer = 0;
     public bool isTimerActive = false;
-    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private TextMeshPro timerText;
+    [SerializeField] private BoolScriptable isGamePaused;
     private int sec = 0;
     private int min = 0;
 
@@ -24,7 +25,7 @@ public class Timer : MonoBehaviour
 
     private void Update()
     {
-        if (isTimerActive)
+        if (isTimerActive && !isGamePaused.value)
         {
             timer += Time.deltaTime;
             sec = Mathf.FloorToInt(timer % 60);
