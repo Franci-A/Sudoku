@@ -9,6 +9,7 @@ public class TileHandler : MonoBehaviour
     int x, y;
     public List<GameObject> notes;
     [SerializeField] private IntScriptable selectedNumber;
+    [SerializeField] private Vector2Scriptable selectedTile;
     public SpriteRenderer background;
     public Tile tile;
     private SO_ColorThemeScriptable colorTheme;
@@ -20,6 +21,8 @@ public class TileHandler : MonoBehaviour
         this.tile = tile;
         colorTheme = theme;
         selectedNumber.OnValueChanged.AddListener(HandleSelectedNumberColor);
+        selectedTile.OnValueChanged.AddListener(HandleSelectedTileColor);
+
     }
 
     private void OnMouseDown()
@@ -29,7 +32,7 @@ public class TileHandler : MonoBehaviour
 
     public void SelectTile()
     {
-        background.sprite = colorTheme.selectedBackground;
+        selectedTile.SetValue(x, y);
         if (tile.fixedNumber)
         {
             selectedNumber.SetValue(tile.placedNumber);
@@ -47,13 +50,38 @@ public class TileHandler : MonoBehaviour
     {
         if (selectedNumber.value == -1)
         {
-            background.sprite = colorTheme.baseBackground;
+            //background.sprite = colorTheme.baseBackground;
             return;
         }
 
         if(selectedNumber.value == tile.placedNumber)
             background.sprite = colorTheme.selectedBackground;
-        else
+       /* else
+            background.sprite = colorTheme.baseBackground;*/
+    }
+
+    private void HandleSelectedTileColor()
+    {
+        if (selectedTile.x == -1)
+        {
             background.sprite = colorTheme.baseBackground;
+            return;
+        }
+
+        if (selectedTile.y == y && selectedTile.x == x)
+        {
+            //is selected tile
+            background.sprite = colorTheme.selectedBackground;
+
+        }
+        else if (selectedTile.y == y || selectedTile.x == x || tile.inSquareNum == MathUtilities.ConvertGridToSquare(selectedTile.x, selectedTile.y))
+        {
+            //is in row or column or square
+            background.sprite = colorTheme.highlightedBackground;
+        }
+        else
+        {
+            background.sprite = colorTheme.baseBackground;
+        }
     }
 }

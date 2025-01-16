@@ -30,9 +30,9 @@ public class Timer : MonoBehaviour
             sec = Mathf.FloorToInt(timer % 60);
             min = Mathf.FloorToInt(timer / 60);
             if(sec < 10)
-                timerText.text = min + ":0" + sec ;
+                timerText.text = "<sprite index=0>" + min + ":0" + sec ;
             else
-                timerText.text = min + ":" + sec ;
+                timerText.text = "<sprite index=0>" + min + ":" + sec ;
         }
     }
 

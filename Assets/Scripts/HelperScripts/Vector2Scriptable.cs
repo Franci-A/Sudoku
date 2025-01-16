@@ -13,6 +13,9 @@ public class Vector2Scriptable : ScriptableObject
 
     public UnityEvent OnValueChanged;
 
+    public int x { get { return value.x; } set { this.value.x = value; } }
+    public int y { get { return value.y; } set { this.value.y = value; } }
+
     public void SetValue(int x, int y)
     {
         SetValue(new Vector2Int(x, y));

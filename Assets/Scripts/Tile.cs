@@ -15,13 +15,15 @@ public class Tile
     public List<GameObject> notes;
     public SpriteRenderer background;
     [SerializeField] private SO_ColorThemeScriptable colorTheme;
+    public int inSquareNum = -1;
 
-    public Tile(SO_ColorThemeScriptable theme, TextMeshPro textInstance)
+    public Tile(SO_ColorThemeScriptable theme, TextMeshPro textInstance, int inSquareNum)
     {
         possibleNum = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         colorTheme = theme;
         text = textInstance;
         text.color = colorTheme.placedTextColor;
+        this.inSquareNum = inSquareNum;
     }
 
     public List<int> GetPossibleNumber => possibleNum;

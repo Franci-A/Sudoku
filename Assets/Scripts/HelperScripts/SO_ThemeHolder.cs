@@ -8,7 +8,7 @@ using UnityEngine;
 public class SO_ThemeHolder : ScriptableObject
 {
     public List<ThemeHolder> themes;
-    public VectorScriptable selectedTheme;
+    public IntScriptable selectedTheme;
 
     public SO_ColorThemeScriptable GetSelectdedTheme()
     {        

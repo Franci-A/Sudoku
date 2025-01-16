@@ -641,8 +641,9 @@ MonoBehaviour:
   - {fileID: 9019917296665512357}
   - {fileID: 5280725426872573265}
   - {fileID: 7454891957037346111}
-  background: {fileID: 5344900792740600322}
   selectedNumber: {fileID: 11400000, guid: 6a6e5b997bbfe8244a43440bb7531998, type: 2}
+  selectedTile: {fileID: 11400000, guid: 1606177fd970c744da83c1c392430a7b, type: 2}
+  background: {fileID: 5344900792740600322}
 --- !u!61 &6615048393509979943
 BoxCollider2D:
   m_ObjectHideFlags: 0

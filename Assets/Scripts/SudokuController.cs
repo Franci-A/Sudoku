@@ -7,8 +7,8 @@ public class SudokuController : MonoBehaviour
     [SerializeField] private IntScriptable selectedController;
     [SerializeField] private IntScriptable selectedNumber;
     [SerializeField] private GameObject popupSelector;
+    [SerializeField] private Vector2Scriptable selectedGrid;
 
-    private Vector2Int selectedGrid = new Vector2Int(-1,-1);
     private void Awake()
     {
         Instance = this;
@@ -18,11 +18,12 @@ public class SudokuController : MonoBehaviour
     {
         selectedNumber.OnValueChanged.AddListener(OnSelectNumber);
         selectedController.OnValueChanged.AddListener(UpdateController);
+        selectedGrid.SetValue(-1, -1);
     }
 
     private void UpdateController()
     {
-        selectedGrid = new Vector2Int(-1, -1);
+        selectedGrid.SetValue(-1, -1);
     }
 
     public void OnSelectTile(int gridX, int gridY)
@@ -50,7 +51,7 @@ public class SudokuController : MonoBehaviour
             case 0:
                 if (selectedGrid.x == -1)
                     break;
-                SudokuHandler.Instance.SetGrid(selectedGrid);
+                SudokuHandler.Instance.SetGrid(selectedGrid.value);
                 break;
             case 2:
                 popupSelector.SetActive(false);

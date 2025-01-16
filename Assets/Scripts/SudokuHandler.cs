@@ -37,9 +37,9 @@ public class SudokuHandler : MonoBehaviour
 
             for (int x = 0; x < 9; x++)
             {
-                int index = Mathf.FloorToInt(y / 3) * 3 + Mathf.FloorToInt(x / 3);
+                int index = MathUtilities.ConvertGridToSquare(x,y);
                 TileHandler obj = squaresInstances[index].GetTile((y % 3) *3 + x % 3);
-                Tile tile = new Tile(colorTheme, obj.GetComponentInChildren<TextMeshPro>());
+                Tile tile = new Tile(colorTheme, obj.GetComponentInChildren<TextMeshPro>(), index);
                 obj.Init(x, y, tile , colorTheme);
                 tile.notes = obj.notes;
                 tile.background = obj.background;

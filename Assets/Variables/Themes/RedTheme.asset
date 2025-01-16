@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedButton: {r: 0.9245283, g: 0.7012708, b: 0.20496617, a: 1}
   baseBackground: {fileID: 21300000, guid: e8b5f588160bc2447bbe5c426fde2f38, type: 3}
+  highlightedBackground: {fileID: 21300000, guid: 5756d73d8eda66b4d80620ed0ea61a4b, type: 3}
   selectedBackground: {fileID: 21300000, guid: adee29af74e67a74f9b6a34c1be241f5, type: 3}
   fixedTextColor: {r: 0.22352941, g: 0.28627452, b: 0.32156864, a: 1}
   placedTextColor: {r: 0.13679245, g: 0.3994339, b: 0.5471698, a: 1}

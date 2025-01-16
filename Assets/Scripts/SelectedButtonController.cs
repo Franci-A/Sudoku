@@ -11,6 +11,7 @@ public class SelectedButtonController : MonoBehaviour
     private int preivousNumber = -1;
     [SerializeField] private SO_ThemeHolder themeHolder;
     [SerializeField] private SO_ColorThemeScriptable colorTheme;
+    [SerializeField] private List<int> indexToButtonIndex;
 
     private void Start()
     {
@@ -19,21 +20,20 @@ public class SelectedButtonController : MonoBehaviour
         SelectedButton();
         colorTheme = themeHolder.GetSelectdedTheme();
         selectedNumber.OnValueChanged.AddListener(SelectedButton);
+        baseColor = buttons[0].image.color;
     }
 
     public void SelectedButton()
     {
-        if (selectedNumber.value  == -1)
+        if (selectedNumber.value == -1 || selectedNumber.value == 0)
             return;
-        if (preivousNumber == selectedNumber.value -1)
+        if (preivousNumber == indexToButtonIndex[selectedNumber.value - 1])
             return;
 
         if(preivousNumber != -1)
             buttons[preivousNumber].image.color = baseColor;
-        preivousNumber = selectedNumber.value -1;
-        baseColor = buttons[selectedNumber.value].image.color;
+        preivousNumber = indexToButtonIndex[selectedNumber.value - 1];
 
-        buttons[selectedNumber.value -1].image.color = colorTheme.selectedButton;
-        
+        buttons[preivousNumber].image.color = colorTheme.selectedButton;
     }
 }

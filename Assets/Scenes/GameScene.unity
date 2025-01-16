@@ -833,6 +833,7 @@ MonoBehaviour:
   selectedController: {fileID: 11400000, guid: 9d1d1adadc90c3a498c2dd7d39b62e2c, type: 2}
   selectedNumber: {fileID: 11400000, guid: 6a6e5b997bbfe8244a43440bb7531998, type: 2}
   popupSelector: {fileID: 1055751410}
+  selectedGrid: {fileID: 11400000, guid: 1606177fd970c744da83c1c392430a7b, type: 2}
 --- !u!1 &321205997
 GameObject:
   m_ObjectHideFlags: 0
@@ -3107,6 +3108,7 @@ MonoBehaviour:
   selectedNumber: {fileID: 11400000, guid: 6a6e5b997bbfe8244a43440bb7531998, type: 2}
   themeHolder: {fileID: 11400000, guid: dc091be3fff30b947bdec4f02651a653, type: 2}
   colorTheme: {fileID: 11400000, guid: 1069520e228382543a72eee7df5557ce, type: 2}
+  indexToButtonIndex: 060000000700000008000000030000000400000005000000000000000100000002000000
 --- !u!224 &824076101 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 614015059398515010, guid: 67608389849731e4cbc3a970558b49be, type: 3}
@@ -3799,8 +3801,8 @@ RectTransform:
   m_Children:
   - {fileID: 1784104203}
   - {fileID: 1526599961}
-  - {fileID: 1682982249}
   - {fileID: 676434612}
+  - {fileID: 1682982249}
   - {fileID: 724559114}
   - {fileID: 1055751411}
   m_Father: {fileID: 0}
@@ -5438,10 +5440,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1145556419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.8638409}
+  m_AnchorMin: {x: 0, y: 0.85110044}
   m_AnchorMax: {x: 1, y: 0.98012507}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1.7056885}
+  m_SizeDelta: {x: 0, y: -3.411499}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1784104204
 MonoBehaviour:
