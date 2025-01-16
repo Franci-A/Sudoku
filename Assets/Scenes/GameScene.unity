@@ -794,7 +794,6 @@ MonoBehaviour:
   difficultyNumber: {fileID: 11400000, guid: 55a74c34e33fdc742bc2ea3335b1edf1, type: 2}
   isNotes: {fileID: 11400000, guid: 1404f18947f751f498586a9a4df202db, type: 2}
   isGamePaused: {fileID: 11400000, guid: 714351de08609d44aa8de2f9024c0c49, type: 2}
-  parentTransform: {fileID: 0}
   squaresInstances:
   - {fileID: 1748961218}
   - {fileID: 45248994}

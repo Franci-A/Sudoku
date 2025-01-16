@@ -1,28 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class Tile
 {
     public int solutionNumber = -1;
-    public bool fixedNumber = false;
+    public bool isFixedNumber = false;
     List<int> possibleNum;
 
-    public int placedNumber = -1;
-    public TextMeshPro text;
+    public int placedNumber { get; private set; }
+    public UnityEvent onNumberUpdated = new UnityEvent();
     public List<GameObject> notes;
-    public SpriteRenderer background;
     [SerializeField] private SO_ColorThemeScriptable colorTheme;
     public int inSquareNum = -1;
 
-    public Tile(SO_ColorThemeScriptable theme, TextMeshPro textInstance, int inSquareNum)
+    public Tile(SO_ColorThemeScriptable theme, int inSquareNum)
     {
+        placedNumber = -1;
         possibleNum = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         colorTheme = theme;
-        text = textInstance;
-        text.color = colorTheme.placedTextColor;
         this.inSquareNum = inSquareNum;
     }
 
@@ -55,24 +52,23 @@ public class Tile
 
     public void SetStartNumber()
     {
-        text.color = colorTheme.fixedTextColor;
         SetNumber(solutionNumber);
-        fixedNumber = true;
+        isFixedNumber = true;
     }
 
     public bool SetNumber(int num)
     {
-        if (fixedNumber)
+        if (isFixedNumber)
             return false;
         bool value = false;
         if (num == -1)
         {
             placedNumber = -1;
-            text.text = "";
+            onNumberUpdated.Invoke();
         }
         else {
             placedNumber = num;
-            text.text = num.ToString(); 
+            onNumberUpdated.Invoke();
             value = true;
         }
         for (int i = 0; i < notes.Count; i++)
@@ -97,16 +93,17 @@ public class Tile
     
     public void SetNotesNumber(int number)
     {
-        if (placedNumber != -1 || fixedNumber)
+        if (placedNumber != -1 || isFixedNumber)
             return;
-        notes[number].SetActive(!notes[number].activeSelf);
+        notes[number-1].SetActive(!notes[number-1].activeSelf);
     }
 
     public void ResetTile()
     {
         solutionNumber = -1;
         placedNumber = -1;
-        fixedNumber = false;
+        isFixedNumber = false;
+        onNumberUpdated?.Invoke();
         possibleNum.Clear();
         possibleNum = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         for (int i = 0; i < notes.Count; i++)
@@ -118,10 +115,5 @@ public class Tile
     public bool CheckValidNumber()
     {
         return placedNumber == solutionNumber;
-    }
-
-    public void SetNumberColor(Color color)
-    {
-        text.color = color;
     }
 }

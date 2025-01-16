@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class SudokuHandler : MonoBehaviour
@@ -13,10 +12,8 @@ public class SudokuHandler : MonoBehaviour
     [SerializeField] private BoolScriptable isNotes;
     [SerializeField] private BoolScriptable isGamePaused;
 
-
-    [SerializeField] private Transform parentTransform;
     [SerializeField] private SquareHandler[] squaresInstances;
-    private List<List<Tile>> tiles;
+    public List<List<Tile>> tiles;
     [SerializeField] private GameObject victoryScreen;
     [SerializeField] private SO_ThemeHolder allTheme;
     private SO_ColorThemeScriptable colorTheme;
@@ -39,11 +36,10 @@ public class SudokuHandler : MonoBehaviour
             for (int x = 0; x < 9; x++)
             {
                 int index = MathUtilities.ConvertGridToSquare(x,y);
-                TileHandler obj = squaresInstances[index].GetTile((y % 3) *3 + x % 3);
-                Tile tile = new Tile(colorTheme, obj.GetComponentInChildren<TextMeshPro>(), index);
+                TileHandler obj = squaresInstances[index].GetTile((y % 3) * 3 + x % 3);
+                Tile tile = new Tile(colorTheme, index);
                 obj.Init(x, y, tile , colorTheme);
                 tile.notes = obj.notes;
-                tile.background = obj.background;
                 row.Add(tile);
             }
 
@@ -116,21 +112,21 @@ public class SudokuHandler : MonoBehaviour
                 }
             }
             //check for already place the same number in row/colunm/square
-            if(CheckDoublesRow(gridX, gridY, selectedNumber.value))
+            if (CheckDoublesRow(gridX, gridY, selectedNumber.value))
             {
-                tiles[gridY][gridX].SetNumberColor(colorTheme.wrongTextColor);
+                squaresInstances[MathUtilities.ConvertGridToSquare(gridX, gridY)].GetTile(MathUtilities.ConvertGridToIndexInSquare(gridX, gridY)).SetWrongColor(true);
             }
-            if(CheckDoublesColunm(gridX, gridY, selectedNumber.value))
+            else if (CheckDoublesColunm(gridX, gridY, selectedNumber.value))
             {
-                tiles[gridY][gridX].SetNumberColor(colorTheme.wrongTextColor);
+                squaresInstances[MathUtilities.ConvertGridToSquare(gridX, gridY)].GetTile(MathUtilities.ConvertGridToIndexInSquare(gridX, gridY)).SetWrongColor(true);
             }
-            if(CheckDoublesSquare(gridX, gridY, selectedNumber.value))
+            else if (CheckDoublesSquare(gridX, gridY, selectedNumber.value))
             {
-                tiles[gridY][gridX].SetNumberColor(colorTheme.wrongTextColor);
+                squaresInstances[MathUtilities.ConvertGridToSquare(gridX, gridY)].GetTile(MathUtilities.ConvertGridToIndexInSquare(gridX, gridY)).SetWrongColor(true);
             }
-            if (placed)
+            else
             {
-                //tiles[gridY][gridX].background.color = colorTheme.selectedBackground;
+                squaresInstances[MathUtilities.ConvertGridToSquare(gridX, gridY)].GetTile(MathUtilities.ConvertGridToIndexInSquare(gridX, gridY)).SetWrongColor(false);
             }
         }
     }

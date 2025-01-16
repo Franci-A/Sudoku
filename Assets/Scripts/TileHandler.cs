@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,9 +12,14 @@ public class TileHandler : MonoBehaviour
     [SerializeField] private IntScriptable selectedNumber;
     [SerializeField] private Vector2Scriptable selectedTile;
     public SpriteRenderer background;
+    private TextMeshPro numText;
     public Tile tile;
     private SO_ColorThemeScriptable colorTheme;
 
+    private void Awake()
+    {
+        numText = GetComponentInChildren<TextMeshPro>();
+    }
     public void Init(int gridX, int gridY, Tile tile, SO_ColorThemeScriptable theme)
     {
         x = gridX;
@@ -22,9 +28,16 @@ public class TileHandler : MonoBehaviour
         colorTheme = theme;
         selectedNumber.OnValueChanged.AddListener(HandleSelectedNumberColor);
         selectedTile.OnValueChanged.AddListener(HandleSelectedTileColor);
-
+        numText.color = tile.isFixedNumber ? colorTheme.fixedTextColor : colorTheme.placedTextColor;
+        this.tile.onNumberUpdated.AddListener(UpdateText);
     }
 
+    private void OnDestroy()
+    {
+        this.tile.onNumberUpdated.RemoveListener(UpdateText);
+        selectedNumber.OnValueChanged.RemoveListener(HandleSelectedNumberColor);
+        selectedTile.OnValueChanged.RemoveListener(HandleSelectedTileColor);
+    }
     private void OnMouseDown()
     {
         SelectTile();
@@ -33,7 +46,7 @@ public class TileHandler : MonoBehaviour
     public void SelectTile()
     {
         selectedTile.SetValue(x, y);
-        if (tile.fixedNumber)
+        if (tile.isFixedNumber)
         {
             selectedNumber.SetValue(tile.placedNumber);
             return;
@@ -82,6 +95,24 @@ public class TileHandler : MonoBehaviour
         else
         {
             background.sprite = colorTheme.baseBackground;
+        }
+    }
+
+    private void UpdateText()
+    {
+        numText.text = tile.placedNumber == -1 ? "" : tile.placedNumber.ToString();
+    }
+
+    public void SetWrongColor(bool isWrong)
+    {
+        if (isWrong)
+        {
+            numText.color = colorTheme.wrongTextColor;
+
+        }
+        else
+        {
+            numText.color = tile.isFixedNumber ? colorTheme.fixedTextColor : colorTheme.placedTextColor;
         }
     }
 }
