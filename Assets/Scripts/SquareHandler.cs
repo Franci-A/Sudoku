@@ -9,4 +9,14 @@ public class SquareHandler : MonoBehaviour
     {
         return tileHandlers[index];
     }
+
+    public bool HasNumber(int number)
+    {
+        for (int i = 0; i < tileHandlers.Count; i++)
+        {
+            if(tileHandlers[i].tile.placedNumber == number)
+                return true;
+        }
+        return false;
+    }
 }

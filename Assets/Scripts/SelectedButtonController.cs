@@ -12,6 +12,7 @@ public class SelectedButtonController : MonoBehaviour
     [SerializeField] private SO_ThemeHolder themeHolder;
     [SerializeField] private SO_ColorThemeScriptable colorTheme;
     [SerializeField] private List<int> indexToButtonIndex;
+    List<int> completedNumber = new List<int>();
 
     private void Start()
     {
@@ -27,13 +28,30 @@ public class SelectedButtonController : MonoBehaviour
     {
         if (selectedNumber.value == -1 || selectedNumber.value == 0)
             return;
-        if (preivousNumber == indexToButtonIndex[selectedNumber.value - 1])
+        if (preivousNumber == selectedNumber.value - 1)
             return;
 
-        if(preivousNumber != -1)
-            buttons[preivousNumber].image.color = baseColor;
-        preivousNumber = indexToButtonIndex[selectedNumber.value - 1];
+        if (preivousNumber != -1)
+        {
+            buttons[indexToButtonIndex[preivousNumber]].image.color = completedNumber.Contains(preivousNumber)? colorTheme.completedButton : baseColor;
+        }
+        preivousNumber = selectedNumber.value - 1;
 
-        buttons[preivousNumber].image.color = colorTheme.selectedButton;
+        buttons[indexToButtonIndex[preivousNumber]].image.color = colorTheme.selectedButton;
+    }
+
+    public void CompletedNumber(int number)
+    {
+        buttons[indexToButtonIndex[number-1]].image.color = colorTheme.completedButton;
+        completedNumber.Add(number-1);
+    }
+
+    public void NotCompletedNumber(int number)
+    {
+        if (completedNumber.Contains(number-1))
+        {
+            completedNumber.Remove(number-1);
+            buttons[indexToButtonIndex[number-1]].image.color = baseColor;
+        }
     }
 }

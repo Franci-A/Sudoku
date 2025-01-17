@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef0a25c4949241e47834c485e94bd9dc, type: 3}
   m_Name: BaseTheme
   m_EditorClassIdentifier: 
-  selectedButton: {r: 0.5613208, g: 0.9079854, b: 1, a: 1}
+  selectedButton: {r: 0.2991723, g: 0.49142295, b: 0.764151, a: 1}
+  completedButton: {r: 0.64705884, g: 0.92549026, b: 0.9176471, a: 1}
   baseBackground: {fileID: 21300000, guid: e8b5f588160bc2447bbe5c426fde2f38, type: 3}
   highlightedBackground: {fileID: 21300000, guid: 5756d73d8eda66b4d80620ed0ea61a4b, type: 3}
   selectedBackground: {fileID: 21300000, guid: adee29af74e67a74f9b6a34c1be241f5, type: 3}

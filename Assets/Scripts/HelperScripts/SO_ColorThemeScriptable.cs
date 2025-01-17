@@ -8,6 +8,7 @@ using UnityEngine;
 public class SO_ColorThemeScriptable : ScriptableObject
 {
     public Color selectedButton = Color.white;
+    public Color completedButton = Color.white;
     public Sprite baseBackground;
     public Sprite highlightedBackground;
     public Sprite selectedBackground;

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SudokuHandler : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class SudokuHandler : MonoBehaviour
     [SerializeField] private SO_ThemeHolder allTheme;
     private SO_ColorThemeScriptable colorTheme;
     private SudokuCreater sudokuCreater;
+    
+    public UnityEvent<int> OnAllNumPlaced = new UnityEvent<int>();
+    public UnityEvent<int> OnNotAllNumPlaced = new UnityEvent<int>();
 
     private void Awake()
     {
@@ -25,7 +29,7 @@ public class SudokuHandler : MonoBehaviour
         sudokuCreater = GetComponent<SudokuCreater>();
     }
 
-    private void Start()
+    public void StartSudoku()
     {
         colorTheme = allTheme.GetSelectdedTheme();
         tiles = new List<List<Tile>>();
@@ -109,6 +113,24 @@ public class SudokuHandler : MonoBehaviour
                 {
                     victoryScreen.SetActive(true);
                     return;
+                }
+
+                else
+                {
+                    int numPlaced = 0;
+                    for (int i = 0; i < squaresInstances.Length; i++)
+                    {
+                        if (squaresInstances[i].HasNumber(selectedNumber.value))
+                            numPlaced++;
+                    }
+                    if (numPlaced >= 9)
+                    {
+                        OnAllNumPlaced.Invoke(selectedNumber.value);
+                    }
+                    else
+                    {
+                        OnNotAllNumPlaced.Invoke(selectedNumber.value);
+                    }
                 }
             }
             //check for already place the same number in row/colunm/square
